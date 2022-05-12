@@ -83,5 +83,9 @@
                 "required": true
             }
         ]
+    },
+    {
+        "name": "status",
+        "description": "Set the status of the server"
     }
 ]

@@ -5,6 +5,7 @@ const register = require('./register');
 const permission = require('./permission');
 
 const discord = require('discord.js');
+const https = require('https');
 
 const client = new discord.Client({ intents: [discord.Intents.FLAGS.GUILDS, discord.Intents.FLAGS.GUILD_MESSAGES] });
 client.login(config.token);
@@ -331,6 +332,65 @@ client.on('interactionCreate', interaction => {
                     components: [row]
                 });
                 break;
+            }
+            case 'status': {
+                let anyFailures = false;
+
+                let toSend = '__**Discord Bot:**__ :green_circle:\n';
+                toSend += 'Users: ' + interaction.guild.members.cache.size + '\n';
+
+                let currentTime = new Date().getTime();
+                toSend += 'Response Time: ' + (interaction.createdTimestamp - currentTime) + 'ms\n';
+
+                // Check the status of the JitStreamer http server
+                const options = {
+                    hostname: 'jitstreamer.com',
+                    port: 443,
+                    path: '/version',
+                    method: 'GET',
+                };
+
+                const req = https.request(options, res => {
+                    console.log(`statusCode: ${res.statusCode}`);
+
+                    res.on('data', d => {
+                        toSend += '__**JitStreamer:**__ :green_circle:\n';
+                        toSend += 'Version: ' + d.toString() + '\n';
+
+                        let new_time = new Date().getTime();
+                        toSend += 'Response Time: ' + (new_time - currentTime) + 'ms\n';
+
+                        let embed = new discord.MessageEmbed()
+                            .setTitle('Server Status')
+                            .setDescription(toSend)
+                            .setColor('#00FF00');
+
+                        interaction.reply({
+                            embeds: [embed],
+                            ephemeral: false
+                        });
+                        return;
+                    });
+                });
+
+                req.on('error', error => {
+                    toSend += '__**JitStreamer:**__ :red_circle:\n';
+                    toSend += 'Error: ' + error.toString() + '\n';
+
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Server Status')
+                        .setDescription(toSend)
+                        .setColor('#FF0000');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: false
+                    });
+                });
+
+                req.end();
+                break;
+
             }
             default: {
                 // Search for a tag
