@@ -388,6 +388,18 @@ client.on('interactionCreate', interaction => {
                 }
 
                 let member = interaction.guild.members.cache.find(member => member.id === data.user);
+                if (!member) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('User not found')
+                        .setColor('#ff0000');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: true
+                    });
+                    return;
+                }
 
                 if (data.action === 'approve') {
                     member.ban();
