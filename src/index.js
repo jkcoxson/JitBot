@@ -334,14 +334,7 @@ client.on('interactionCreate', interaction => {
                 break;
             }
             case 'status': {
-                let anyFailures = false;
-                let members = 0;
-                interaction.guild.members.fetch().then(fetchedMembers => {
-                    members = fetchedMembers.size;
-                });
-
                 let toSend = '__**Discord Bot:**__ :green_circle:\n';
-                toSend += 'Users: ' + members + '\n';
 
                 let currentTime = new Date().getTime();
                 toSend += 'Response Time: ' + (currentTime - interaction.createdTimestamp) + 'ms\n';
