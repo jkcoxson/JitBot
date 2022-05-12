@@ -1,0 +1,42 @@
+[
+    {
+        "name": "add_tag",
+        "description": "Add a tag that will return a pregenerated response",
+        "options": [
+            {
+                "name": "name",
+                "description": "The name of the tag",
+                "type": "STRING",
+                "required": true
+            },
+            {
+                "name": "response",
+                "description": "The response to return when the tag is matched",
+                "type": "STRING",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "remove_tag",
+        "description": "Remove a tag",
+        "options": [
+            {
+                "name": "tag",
+                "description": "The tag to remove",
+                "type": 3,
+                "required": true,
+                "choices": [
+                    {
+                        "name": "p",
+                        "value": "p"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "p",
+        "description": "A tag with a pregenerated response"
+    }
+]
