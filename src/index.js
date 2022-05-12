@@ -153,6 +153,65 @@ client.on('interactionCreate', interaction => {
                 }
                 break;
             }
+            case 'mute': {
+                // Check for permission
+                if (!permission.check_mod(interaction.member)) {
+                    interaction.reply({
+                        content: 'You do not have permission to use this command.',
+                        ephemeral: true
+                    });
+                }
+
+                let user = interaction.options.getUser('user');
+                if (user) {
+                    let muted = require('./muted.json');
+                    let currentTime = new Date().getTime();
+                    let muteTime = interaction.options.getInteger('time') * 60000;
+                    let muteEnd = currentTime + muteTime;
+
+                    let ruleNumber = interaction.options.getInteger('rule');
+                    let rule = require('./rules.json')[ruleNumber];
+                    if (!rule) {
+                        interaction.reply({
+                            content: 'Rule not found!',
+                            ephemeral: true
+                        });
+                        return;
+                    }
+
+
+                    muted.push({
+                        user: user.id,
+                        end: muteEnd
+                    });
+                    require('fs').writeFileSync('src/muted.json', JSON.stringify(muted, null, 4));
+
+                    // Give the user the mute role
+                    let guild = interaction.guild;
+                    let muteRole = guild.roles.cache.find(role => role.name === 'Muted');
+                    let member = guild.members.cache.find(member => member.id === user.id);
+                    if (member) {
+                        member.roles.add(muteRole);
+                    }
+
+                    let timeString = "";
+                    if (interaction.options.getInteger('time')) {
+                        timeString = interaction.options.getInteger('time');
+                    } else {
+                        timeString = 'indefinite';
+                    }
+                    interaction.reply({
+                        content: '<@' + user.id + '> has been muted for ' + timeString + ' hours.\n' + rule,
+                        ephemeral: false
+                    });
+                    break;
+                } else {
+                    interaction.reply({
+                        content: 'User not found!',
+                        ephemeral: true
+                    });
+                }
+            }
             default: {
                 // Search for a tag
                 let tags = require('./tags.json');
@@ -172,3 +231,23 @@ client.on('interactionCreate', interaction => {
         }
     }
 });
+
+setInterval(() => {
+    let muted = require('./muted.json');
+    let currentTime = new Date().getTime();
+
+    muted.forEach(user => {
+        if (user.end < currentTime) {
+            let guild = client.guilds.cache.get(config.guild);
+            let muteRole = guild.roles.cache.find(role => role.name === 'Muted');
+            let member = guild.members.cache.find(member => member.id === user.user);
+            if (member) {
+                member.roles.cache.delete(muteRole);
+            }
+        }
+    });
+
+    muted = muted.filter(mute => mute.end > currentTime);
+    require('fs').writeFileSync('src/muted.json', JSON.stringify(muted, null, 4));
+
+}, 1000);

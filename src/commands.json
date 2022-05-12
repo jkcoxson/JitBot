@@ -50,5 +50,29 @@
                 "required": true
             }
         ]
+    },
+    {
+        "name": "mute",
+        "description": "Mute a member",
+        "options": [
+            {
+                "name": "user",
+                "description": "The user to mute",
+                "type": 6,
+                "required": true
+            },
+            {
+                "name": "rule",
+                "description": "The rule to mute the user under",
+                "type": "INTEGER",
+                "required": true
+            },
+            {
+                "name": "time",
+                "description": "The time in hours to mute the user for",
+                "type": "INTEGER",
+                "required": false
+            }
+        ]
     }
 ]
