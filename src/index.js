@@ -56,8 +56,12 @@ client.on('interactionCreate', interaction => {
             case 'add_tag': {
                 // Check for permission
                 if (!permission.check_mod(interaction.member)) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('You do not have permission to use this command')
+                        .setColor('#ff0000');
                     interaction.reply({
-                        content: 'You do not have permission to use this command.',
+                        embeds: [embed],
                         ephemeral: true
                     });
                     return;
@@ -90,8 +94,13 @@ client.on('interactionCreate', interaction => {
 
                 register.register(client);
 
+                let embed = new discord.MessageEmbed()
+                    .setTitle('Success')
+                    .setDescription('Tag added')
+                    .setColor('#00ff00');
+
                 interaction.reply({
-                    content: 'Tag added!',
+                    embeds: [embed],
                     ephemeral: true
                 });
                 break;
@@ -99,8 +108,13 @@ client.on('interactionCreate', interaction => {
             case 'remove_tag': {
                 // Check for permission
                 if (!permission.check_mod(interaction.member)) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('You do not have permission to use this command')
+                        .setColor('#ff0000');
+
                     interaction.reply({
-                        content: 'You do not have permission to use this command.',
+                        embeds: [embed],
                         ephemeral: true
                     });
                     return;
@@ -125,13 +139,23 @@ client.on('interactionCreate', interaction => {
 
                     register.register(client);
 
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Success')
+                        .setDescription('Tag removed')
+                        .setColor('#00ff00');
+
                     interaction.reply({
-                        content: 'Tag removed!',
+                        embeds: [embed],
                         ephemeral: true
                     });
                 } else {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('Tag not found')
+                        .setColor('#ff0000');
+
                     interaction.reply({
-                        content: 'Tag not found!',
+                        embeds: [embed],
                         ephemeral: true
                     });
                 }
@@ -141,13 +165,24 @@ client.on('interactionCreate', interaction => {
                 let rules = require('./rules.json');
                 let rule = rules[interaction.options.getInteger('number').toString()];
                 if (rule) {
+                    let title = rule.split('\n')[0];
+                    let content = rule.split('\n')[1];
+                    let embed = new discord.MessageEmbed()
+                        .setTitle(title)
+                        .setDescription(content)
+                        .setColor('#0000FF');
+
                     interaction.reply({
-                        content: rule,
-                        ephemeral: false
+                        embeds: [embed]
                     });
                 } else {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('Rule not found')
+                        .setColor('#ff0000');
+
                     interaction.reply({
-                        content: 'Rule not found!',
+                        embeds: [embed],
                         ephemeral: true
                     });
                 }
@@ -156,8 +191,13 @@ client.on('interactionCreate', interaction => {
             case 'mute': {
                 // Check for permission
                 if (!permission.check_mod(interaction.member)) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('You do not have permission to use this command')
+                        .setColor('#ff0000');
+
                     interaction.reply({
-                        content: 'You do not have permission to use this command.',
+                        embeds: [embed],
                         ephemeral: true
                     });
                 }
@@ -172,8 +212,13 @@ client.on('interactionCreate', interaction => {
                     let ruleNumber = interaction.options.getInteger('rule');
                     let rule = require('./rules.json')[ruleNumber];
                     if (!rule) {
+                        let embed = new discord.MessageEmbed()
+                            .setTitle('Error')
+                            .setDescription('Rule not found')
+                            .setColor('#ff0000');
+
                         interaction.reply({
-                            content: 'Rule not found!',
+                            embeds: [embed],
                             ephemeral: true
                         });
                         return;
@@ -200,14 +245,25 @@ client.on('interactionCreate', interaction => {
                     } else {
                         timeString = 'indefinite';
                     }
+                    let embed = new discord.MessageEmbed()
+                        .setTitle(user.username + ' has been muted for ' + timeString + ' hours')
+                        .setDescription(rule)
+                        .setColor('#0000FF');
+
                     interaction.reply({
-                        content: '<@' + user.id + '> has been muted for ' + timeString + ' hours.\n' + rule,
+                        embeds: [embed],
+                        content: '<@' + user.id + '>',
                         ephemeral: false
                     });
                     break;
                 } else {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('User not found')
+                        .setColor('#ff0000');
+
                     interaction.reply({
-                        content: 'User not found!',
+                        embeds: [embed],
                         ephemeral: true
                     });
                 }
@@ -222,8 +278,13 @@ client.on('interactionCreate', interaction => {
                         ephemeral: false
                     });
                 } else {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('Tag not found')
+                        .setColor('#ff0000');
+
                     interaction.reply({
-                        content: 'Tag not found!',
+                        embeds: [embed],
                         ephemeral: true
                     });
                 }

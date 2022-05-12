@@ -26,18 +26,9 @@
                 "description": "The tag to remove",
                 "type": 3,
                 "required": true,
-                "choices": [
-                    {
-                        "name": "p",
-                        "value": "p"
-                    }
-                ]
+                "choices": []
             }
         ]
-    },
-    {
-        "name": "p",
-        "description": "A tag with a pregenerated response"
     },
     {
         "name": "rule",
