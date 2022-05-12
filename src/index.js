@@ -15,6 +15,7 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', message => {
+    if (message.author.bot) return;
     // Predetermined responses
     switch (message.content.toLocaleLowerCase().trim()) {
         case 'good bot': {
@@ -121,6 +122,22 @@ client.on('interactionCreate', interaction => {
                 }
                 break;
             }
+            case 'rule': {
+                let rules = require('./rules.json');
+                let rule = rules[interaction.options.getInteger('number').toString()];
+                if (rule) {
+                    interaction.reply({
+                        content: rule,
+                        ephemeral: false
+                    });
+                } else {
+                    interaction.reply({
+                        content: 'Rule not found!',
+                        ephemeral: true
+                    });
+                }
+                break;
+            }
             default: {
                 // Search for a tag
                 let tags = require('./tags.json');
@@ -139,4 +156,4 @@ client.on('interactionCreate', interaction => {
             }
         }
     }
-})
+});

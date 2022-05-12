@@ -38,5 +38,17 @@
     {
         "name": "p",
         "description": "A tag with a pregenerated response"
+    },
+    {
+        "name": "rule",
+        "description": "State a rule",
+        "options": [
+            {
+                "name": "number",
+                "description": "The number of the rule",
+                "type": "INTEGER",
+                "required": true
+            }
+        ]
     }
 ]
