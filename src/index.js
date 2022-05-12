@@ -344,7 +344,7 @@ client.on('interactionCreate', interaction => {
                 toSend += 'Users: ' + members + '\n';
 
                 let currentTime = new Date().getTime();
-                toSend += 'Response Time: ' + (interaction.createdTimestamp - currentTime) + 'ms\n';
+                toSend += 'Response Time: ' + (currentTime - interaction.createdTimestamp) + 'ms\n';
 
                 // Check the status of the JitStreamer http server
                 const options = {
