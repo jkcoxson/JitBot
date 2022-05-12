@@ -5,7 +5,7 @@ const register = require('./register');
 const permission = require('./permission');
 
 const discord = require('discord.js');
-const https = require('https');
+const http = require('http');
 
 const client = new discord.Client({ intents: [discord.Intents.FLAGS.GUILDS, discord.Intents.FLAGS.GUILD_MESSAGES] });
 client.login(config.token);
@@ -335,9 +335,13 @@ client.on('interactionCreate', interaction => {
             }
             case 'status': {
                 let anyFailures = false;
+                let members = 0;
+                interaction.guild.members.fetch().then(fetchedMembers => {
+                    members = fetchedMembers.size;
+                });
 
                 let toSend = '__**Discord Bot:**__ :green_circle:\n';
-                toSend += 'Users: ' + interaction.guild.members.cache.size + '\n';
+                toSend += 'Users: ' + members + '\n';
 
                 let currentTime = new Date().getTime();
                 toSend += 'Response Time: ' + (interaction.createdTimestamp - currentTime) + 'ms\n';
@@ -345,12 +349,12 @@ client.on('interactionCreate', interaction => {
                 // Check the status of the JitStreamer http server
                 const options = {
                     hostname: 'jitstreamer.com',
-                    port: 443,
-                    path: '/version',
+                    port: 80,
+                    path: '/version/',
                     method: 'GET',
                 };
 
-                const req = https.request(options, res => {
+                const req = http.request(options, res => {
                     console.log(`statusCode: ${res.statusCode}`);
 
                     res.on('data', d => {
@@ -374,8 +378,8 @@ client.on('interactionCreate', interaction => {
                 });
 
                 req.on('error', error => {
-                    toSend += '__**JitStreamer:**__ :red_circle:\n';
-                    toSend += 'Error: ' + error.toString() + '\n';
+                    toSend += '\n__**JitStreamer:**__ :red_circle:\n';
+                    toSend += error.toString() + '\n';
 
                     let embed = new discord.MessageEmbed()
                         .setTitle('Server Status')
