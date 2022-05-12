@@ -65,5 +65,23 @@
                 "required": false
             }
         ]
+    },
+    {
+        "name": "ban",
+        "description": "Ban a member",
+        "options": [
+            {
+                "name": "user",
+                "description": "The user to ban",
+                "type": 6,
+                "required": true
+            },
+            {
+                "name": "rule",
+                "description": "The rule to ban the user under",
+                "type": "INTEGER",
+                "required": true
+            }
+        ]
     }
 ]

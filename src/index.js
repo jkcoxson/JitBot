@@ -255,7 +255,6 @@ client.on('interactionCreate', interaction => {
                         content: '<@' + user.id + '>',
                         ephemeral: false
                     });
-                    break;
                 } else {
                     let embed = new discord.MessageEmbed()
                         .setTitle('Error')
@@ -267,6 +266,71 @@ client.on('interactionCreate', interaction => {
                         ephemeral: true
                     });
                 }
+                break;
+            }
+            case 'ban': {
+                // Check for permission
+                if (!permission.check_mod(interaction.member)) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('You do not have permission to use this command')
+                        .setColor('#ff0000');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: true
+                    });
+                }
+
+                let ruleNumber = interaction.options.getInteger('rule');
+                let rule = require('./rules.json')[ruleNumber];
+                if (!rule) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('Rule not found')
+                        .setColor('#ff0000');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: true
+                    });
+                    return;
+                }
+
+                let user = interaction.options.getUser('user');
+                let member = interaction.guild.members.cache.find(member => member.id === user.id);
+                let mutedRole = interaction.guild.roles.cache.find(role => role.name === 'Muted');
+                let moderatorRole = interaction.guild.roles.cache.find(role => role.name === 'Moderator');
+
+                member.roles.add(mutedRole);
+
+                let embed = new discord.MessageEmbed()
+                    .setTitle(interaction.member.displayName + ' has requested a ban on ' + user.username)
+                    .setDescription(rule)
+                    .setColor('#0000FF');
+
+                let row = new discord.MessageActionRow()
+                    .addComponents(new discord.MessageButton()
+                        .setCustomId(JSON.stringify({
+                            command: 'ban',
+                            action: 'approve',
+                            user: user.id,
+                            mod: interaction.member.id
+                        })).setLabel('Approve').setStyle('PRIMARY'))
+                    .addComponents(new discord.MessageButton()
+                        .setCustomId(JSON.stringify({
+                            command: 'ban',
+                            action: 'deny',
+                            user: user.id,
+                            mod: interaction.member.id
+                        })).setLabel('Deny').setStyle('DANGER'));
+
+                interaction.reply({
+                    content: '<@' + user.id + '>, <@&' + moderatorRole.id + '>',
+                    embeds: [embed],
+                    components: [row]
+                });
+                break;
             }
             default: {
                 // Search for a tag
@@ -288,6 +352,72 @@ client.on('interactionCreate', interaction => {
                         ephemeral: true
                     });
                 }
+            }
+        }
+    }
+
+    if (interaction.isButton()) {
+        let data = JSON.parse(interaction.customId);
+        switch (data.command) {
+            case 'ban': {
+                // Check for permission
+                if (!permission.check_mod(interaction.member)) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('You do not have permission to use this command')
+                        .setColor('#ff0000');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: true
+                    });
+                }
+
+                // Check if the approver is the original moderator
+                if (data.mod == interaction.member.id) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('You cannot approve or deny your own ban')
+                        .setColor('#ff0000');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: true
+                    });
+                    return;
+                }
+
+                let member = interaction.guild.members.cache.find(member => member.id === data.user);
+
+                if (data.action === 'approve') {
+                    member.ban();
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Ban approved')
+                        .setDescription(member.displayName + ' has been banned')
+                        .setColor('#0000FF');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: false
+                    });
+                }
+                if (data.action === 'deny') {
+                    // Unmute the user
+                    let mutedRole = interaction.guild.roles.cache.find(role => role.name === 'Muted');
+                    member.roles.remove(mutedRole);
+
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Ban denied')
+                        .setDescription('Ban request denied')
+                        .setColor('#0000FF');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: false
+                    });
+                    return;
+                }
+                break;
             }
         }
     }
