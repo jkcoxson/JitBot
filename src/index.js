@@ -392,7 +392,7 @@ client.on('interactionCreate', interaction => {
                 if (data.action === 'approve') {
                     member.ban();
                     let embed = new discord.MessageEmbed()
-                        .setTitle('Ban approved')
+                        .setTitle('Ban approved by ' + interaction.member.displayName)
                         .setDescription(member.displayName + ' has been banned')
                         .setColor('#0000FF');
 
@@ -407,7 +407,7 @@ client.on('interactionCreate', interaction => {
                     member.roles.remove(mutedRole);
 
                     let embed = new discord.MessageEmbed()
-                        .setTitle('Ban denied')
+                        .setTitle('Ban denied by ' + interaction.member.displayName)
                         .setDescription('Ban request denied')
                         .setColor('#0000FF');
 
