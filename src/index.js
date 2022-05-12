@@ -20,9 +20,19 @@ client.on('messageCreate', message => {
     switch (message.content.toLocaleLowerCase().trim()) {
         case 'good bot': {
             message.reply('I know I am');
+            break;
         }
         case 'bad bot': {
             message.reply('Am not smh');
+            break;
+        }
+        case 'no you': {
+            message.reply('no you');
+            break;
+        }
+        case 'no u': {
+            message.reply('no u');
+            break;
         }
     }
 
@@ -32,6 +42,11 @@ client.on('messageCreate', message => {
     }
     if (message.content.includes('python') && (message.content.includes('program') || message.content.includes('code') || message.content.includes('script'))) {
         message.channel.send('No P*thon allowed!');
+    }
+
+    // Randomly respond to messages
+    if (Math.random() < 0.01) {
+        message.channel.send('You are insecure');
     }
 });
 
