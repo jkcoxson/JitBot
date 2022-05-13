@@ -334,58 +334,62 @@ client.on('interactionCreate', interaction => {
                 break;
             }
             case 'status': {
-                let toSend = '__**Discord Bot:**__ :green_circle:\n';
+                interaction.deferReply().then(() => {
+                    let toSend = '__**Discord Bot:**__ :green_circle:\n';
 
-                let currentTime = new Date().getTime();
-                toSend += 'Response Time: ' + (currentTime - interaction.createdTimestamp) + 'ms\n';
+                    let currentTime = new Date().getTime();
+                    toSend += 'Response Time: ' + (currentTime - interaction.createdTimestamp) + 'ms\n';
 
-                // Check the status of the JitStreamer http server
-                const options = {
-                    hostname: 'jitstreamer.com',
-                    port: 80,
-                    path: '/version/',
-                    method: 'GET',
-                };
+                    // Check the status of the JitStreamer http server
+                    const options = {
+                        hostname: 'jitstreamer.com',
+                        port: 80,
+                        path: '/version/',
+                        method: 'GET',
+                    };
 
-                const req = http.request(options, res => {
-                    console.log(`statusCode: ${res.statusCode}`);
+                    const req = http.request(options, res => {
+                        console.log(`statusCode: ${res.statusCode}`);
 
-                    res.on('data', d => {
-                        toSend += '__**JitStreamer:**__ :green_circle:\n';
-                        toSend += 'Version: ' + d.toString() + '\n';
+                        res.on('data', d => {
+                            toSend += '__**JitStreamer:**__ :green_circle:\n';
+                            toSend += 'Version: ' + d.toString() + '\n';
 
-                        let new_time = new Date().getTime();
-                        toSend += 'Response Time: ' + (new_time - currentTime) + 'ms\n';
+                            let new_time = new Date().getTime();
+                            toSend += 'Response Time: ' + (new_time - currentTime) + 'ms\n';
+
+                            let embed = new discord.MessageEmbed()
+                                .setTitle('Server Status')
+                                .setDescription(toSend)
+                                .setColor('#00FF00');
+
+                            interaction.editReply({
+                                embeds: [embed],
+                                ephemeral: false
+                            });
+                            return;
+                        });
+                    });
+
+                    req.on('error', error => {
+                        toSend += '\n__**JitStreamer:**__ :red_circle:\n';
+                        toSend += error.toString() + '\n';
 
                         let embed = new discord.MessageEmbed()
                             .setTitle('Server Status')
                             .setDescription(toSend)
-                            .setColor('#00FF00');
+                            .setColor('#FF0000');
 
-                        interaction.reply({
+                        interaction.editReply({
                             embeds: [embed],
                             ephemeral: false
                         });
-                        return;
                     });
+
+                    req.end();
                 });
 
-                req.on('error', error => {
-                    toSend += '\n__**JitStreamer:**__ :red_circle:\n';
-                    toSend += error.toString() + '\n';
 
-                    let embed = new discord.MessageEmbed()
-                        .setTitle('Server Status')
-                        .setDescription(toSend)
-                        .setColor('#FF0000');
-
-                    interaction.reply({
-                        embeds: [embed],
-                        ephemeral: false
-                    });
-                });
-
-                req.end();
                 break;
 
             }
