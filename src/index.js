@@ -346,11 +346,10 @@ client.on('interactionCreate', interaction => {
                         port: 80,
                         path: '/version/',
                         method: 'GET',
+                        timeout: 10000
                     };
 
                     const req = http.request(options, res => {
-                        console.log(`statusCode: ${res.statusCode}`);
-
                         res.on('data', d => {
                             toSend += '__**JitStreamer:**__ :green_circle:\n';
                             toSend += 'Version: ' + d.toString() + '\n';
@@ -366,7 +365,7 @@ client.on('interactionCreate', interaction => {
                             interaction.editReply({
                                 embeds: [embed],
                                 ephemeral: false
-                            });
+                            }).catch(() => { });
                             return;
                         });
                     });

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "yeet": "node src/index.js"
+    "yeet": "node src/index.js",
+    "loop": "./loop.sh"
   },
   "author": "Jackson Coxson",
   "license": "ISC",
