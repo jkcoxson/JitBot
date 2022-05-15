@@ -344,15 +344,21 @@ client.on('interactionCreate', interaction => {
                     const options = {
                         hostname: 'jitstreamer.com',
                         port: 80,
-                        path: '/version/',
+                        path: '/census/',
                         method: 'GET',
                         timeout: 10000
                     };
 
                     const req = http.request(options, res => {
                         res.on('data', d => {
+                            let data = JSON.parse(d);
                             toSend += '__**JitStreamer:**__ :green_circle:\n';
-                            toSend += 'Version: ' + d.toString() + '\n';
+                            toSend += 'Uptime:           ' + (data.uptime / 60 / 60).toFixed(1) + ' hours\n';
+                            toSend += 'Registered Users: ' + data.clients + '\n';
+                            toSend += 'Apps Fetched:     ' + data.fetched + '\n';
+                            toSend += 'Apps Launched:    ' + data.launched + '\n';
+                            toSend += 'Apps Attached:    ' + data.attached + '\n';
+                            toSend += 'Version:          ' + data.version + '\n';
 
                             let new_time = new Date().getTime();
                             toSend += 'Response Time: ' + (new_time - currentTime) + 'ms\n';
