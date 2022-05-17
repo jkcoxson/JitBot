@@ -26,7 +26,12 @@
                 "description": "The tag to remove",
                 "type": 3,
                 "required": true,
-                "choices": []
+                "choices": [
+                    {
+                        "name": "cellular",
+                        "value": "cellular"
+                    }
+                ]
             }
         ]
     },
@@ -87,5 +92,9 @@
     {
         "name": "status",
         "description": "Set the status of the server"
+    },
+    {
+        "name": "cellular",
+        "description": "A tag with a pregenerated response"
     }
 ]

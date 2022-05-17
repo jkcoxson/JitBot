@@ -346,11 +346,17 @@ client.on('interactionCreate', interaction => {
                         port: 80,
                         path: '/census/',
                         method: 'GET',
-                        timeout: 10000
+                        timeout: 3000
                     };
+
+                    let responded = false;
 
                     const req = http.request(options, res => {
                         res.on('data', d => {
+                            if (responded) {
+                                return;
+                            }
+                            responded = true;
                             let data = JSON.parse(d);
                             toSend += '__**JitStreamer:**__ :green_circle:\n';
                             toSend += 'Uptime:           ' + (data.uptime / 60 / 60).toFixed(1) + ' hours\n';
@@ -377,6 +383,10 @@ client.on('interactionCreate', interaction => {
                     });
 
                     req.on('error', error => {
+                        if (responded) {
+                            return;
+                        }
+                        responded = true;
                         toSend += '\n__**JitStreamer:**__ :red_circle:\n';
                         toSend += error.toString() + '\n';
 
@@ -390,6 +400,26 @@ client.on('interactionCreate', interaction => {
                             ephemeral: false
                         });
                     });
+
+                    req.on('timeout', () => {
+                        if (responded) {
+                            return;
+                        }
+                        responded = true;
+                        toSend += '\n__**JitStreamer:**__ :red_circle:\n';
+                        toSend += 'Request timed out!!\n';
+
+                        let embed = new discord.MessageEmbed()
+                            .setTitle('Server Status')
+                            .setDescription(toSend)
+                            .setColor('#FF0000');
+
+                        interaction.editReply({
+                            embeds: [embed],
+                            ephemeral: false
+                        });
+                        req.destroy();
+                    })
 
                     req.end();
                 });

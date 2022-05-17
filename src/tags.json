@@ -2,5 +2,9 @@
     {
         "tag": "p",
         "response": "Piracy bad smh"
+    },
+    {
+        "tag": "cellular",
+        "response": "JitStreamer will never support cellular networks. This is not a problem with JitStreamer, it’s a limitation of iOS. There is nothing we can do about it."
     }
 ]
