@@ -45,6 +45,11 @@ client.on('messageCreate', message => {
         message.channel.send('No P*thon allowed!');
     }
 
+    // Amen
+    if (message.content.toLocaleLowerCase().includes('can i get an amen')) {
+        message.channel.send('Amen!');
+    }
+
     // Randomly respond to messages
     if (Math.random() < 0.01) {
         message.channel.send('You are insecure');
