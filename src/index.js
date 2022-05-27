@@ -463,7 +463,7 @@ client.on('interactionCreate', interaction => {
 
                             interaction.editReply({
                                 embeds: [embed],
-                                ephemeral: false
+                                ephemeral: true
                             });
                             return;
                         }
