@@ -96,5 +96,9 @@
     {
         "name": "cellular",
         "description": "A tag with a pregenerated response"
+    },
+    {
+        "name": "reset",
+        "description": "Reset the server"
     }
 ]

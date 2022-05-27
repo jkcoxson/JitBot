@@ -3,6 +3,7 @@
 const config = require('../config.json');
 const register = require('./register');
 const permission = require('./permission');
+const { exec } = require('child_process');
 
 const discord = require('discord.js');
 const http = require('http');
@@ -51,7 +52,7 @@ client.on('messageCreate', message => {
     }
 
     // Randomly respond to messages
-    if (Math.random() < 0.01) {
+    if (Math.random() < 0.001) {
         message.channel.send('You are insecure');
     }
 });
@@ -432,6 +433,53 @@ client.on('interactionCreate', interaction => {
 
                 break;
 
+            }
+            case 'reset': {
+                // Check for permission
+                if (!permission.check_mod(interaction.member)) {
+                    let embed = new discord.MessageEmbed()
+                        .setTitle('Error')
+                        .setDescription('You do not have permission to use this command')
+                        .setColor('#ff0000');
+
+                    interaction.reply({
+                        embeds: [embed],
+                        ephemeral: true
+                    });
+                }
+
+                // Send the SSH command
+                interaction.deferReply().then(() => {
+                    interaction.editReply({
+                        content: 'Resetting...',
+                        ephemeral: false
+                    });
+                    exec('ssh ' + config.host + ' pkill jit_streamer', (error, stdout, stderr) => {
+                        if (error) {
+                            let embed = new discord.MessageEmbed()
+                                .setTitle('Error')
+                                .setDescription(error.toString())
+                                .setColor('#ff0000');
+
+                            interaction.editReply({
+                                embeds: [embed],
+                                ephemeral: false
+                            });
+                            return;
+                        }
+                        let embed = new discord.MessageEmbed()
+                            .setTitle('Success')
+                            .setDescription('JitStreamer has been reset')
+                            .setColor('#00FF00');
+
+                        interaction.editReply({
+                            embeds: [embed],
+                            ephemeral: false
+                        });
+                    }
+                    );
+                });
+                break;
             }
             default: {
                 // Search for a tag
