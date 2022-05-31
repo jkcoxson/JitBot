@@ -364,13 +364,13 @@ client.on('interactionCreate', interaction => {
                             }
                             responded = true;
                             let data = JSON.parse(d);
-                            toSend += '__**JitStreamer:**__ :green_circle:\n';
+                            toSend += '\n__**JitStreamer:**__ :green_circle:\n';
                             toSend += 'Uptime:                ' + (data.uptime / 60 / 60).toFixed(1) + ' hours\n';
-                            toSend += 'Registered Users:      ' + data.clients + '\n';
+                            toSend += 'Registered Users:      ' + data.clients + '\n\n';
                             toSend += 'Apps Fetched:          ' + data.fetched + '\n';
                             toSend += 'Apps Launched:         ' + data.launched + '\n';
-                            toSend += 'Apps Attached:         ' + data.attached + '\n';
-                            toSend += 'AltServer connections: ' + data.netmuxd + '\n';
+                            toSend += 'Apps Attached:         ' + data.attached + '\n\n';
+                            toSend += 'AltServer connections: ' + data.netmuxd + '\n\n';
                             toSend += 'Version:               ' + data.version + '\n';
 
                             let new_time = new Date().getTime();
