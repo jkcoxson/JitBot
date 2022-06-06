@@ -440,13 +440,14 @@ client.on('interactionCreate', interaction => {
                 if (!permission.check_mod(interaction.member)) {
                     let embed = new discord.MessageEmbed()
                         .setTitle('Error')
-                        .setDescription('You do not have permission to use this command')
+                        .setDescription('You do not have permission to use this command\nImagine trying to reset a server that doesn\'t belong to you smh.')
                         .setColor('#ff0000');
 
                     interaction.reply({
                         embeds: [embed],
-                        ephemeral: true
+                        ephemeral: false
                     });
+                    return;
                 }
 
                 // Send the SSH command
