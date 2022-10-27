@@ -36,6 +36,9 @@ client.on('messageCreate', message => {
             message.reply('no u');
             break;
         }
+        case 'rip secret tunnel': {
+            message.reply('f')
+        }
     }
 
     // Ensure no P*thon is allowed
@@ -49,6 +52,11 @@ client.on('messageCreate', message => {
     // Amen
     if (message.content.toLocaleLowerCase().includes('can i get an amen')) {
         message.channel.send('Amen!');
+    }
+
+    // Rip secret tunnel
+    if (message.content.toLocaleLowerCase().includes('secret tunnel')) {
+        message.channel.send('rip secret tunnel');
     }
 
     // Randomly respond to messages

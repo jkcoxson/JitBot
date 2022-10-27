@@ -30,6 +30,18 @@
                     {
                         "name": "cellular",
                         "value": "cellular"
+                    },
+                    {
+                        "name": "unregister",
+                        "value": "unregister"
+                    },
+                    {
+                        "name": "shortcut",
+                        "value": "shortcut"
+                    },
+                    {
+                        "name": "asktoask",
+                        "value": "asktoask"
                     }
                 ]
             }
@@ -100,5 +112,17 @@
     {
         "name": "reset",
         "description": "Reset the server"
+    },
+    {
+        "name": "unregister",
+        "description": "A tag with a pregenerated response"
+    },
+    {
+        "name": "shortcut",
+        "description": "A tag with a pregenerated response"
+    },
+    {
+        "name": "asktoask",
+        "description": "A tag with a pregenerated response"
     }
 ]

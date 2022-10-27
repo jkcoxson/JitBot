@@ -6,5 +6,17 @@
     {
         "tag": "cellular",
         "response": "JitStreamer will never support cellular networks. This is not a problem with JitStreamer, it’s a limitation of iOS. There is nothing we can do about it."
+    },
+    {
+        "tag": "unregister",
+        "response": "**Use this unregester shortcut if you are stuck on a error where you can’t click unregister the main shortcut. Make sure to be connected to the vpn when doing this.** https://www.icloud.com/shortcuts/31a67e5d75a94128943fedc739a91b27"
+    },
+    {
+        "tag": "shortcut",
+        "response": "https://www.icloud.com/shortcuts/64d6dd0bbad54993a78f3691b04cca7d"
+    },
+    {
+        "tag": "asktoask",
+        "response": "https://dontasktoask.com"
     }
 ]
