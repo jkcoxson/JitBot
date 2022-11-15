@@ -59,9 +59,32 @@ client.on('messageCreate', message => {
         message.channel.send('rip secret tunnel');
     }
 
+    // Rust national anthem
+    if (message.content.toLocaleLowerCase().includes('national anthem')) {
+        message.channel.send('All rise for the Rust national anthem\nhttps://www.youtube.com/watch?v=LDU_Txk06tM');
+    }
+
     // Randomly respond to messages
-    if (Math.random() < 0.001) {
+    if (Math.random() < 0.003) {
         message.channel.send('You are insecure');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('lol imagine');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('No, I don\'t think I will');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('https://tenor.com/view/yeet-lion-king-simba-rafiki-throw-gif-16194362');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('Excuse me, what?!');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('Ah heck no');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('Have you tried running it over with your car?');
     }
 });
 

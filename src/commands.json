@@ -42,6 +42,10 @@
                     {
                         "name": "asktoask",
                         "value": "asktoask"
+                    },
+                    {
+                        "name": "log",
+                        "value": "log"
                     }
                 ]
             }
@@ -123,6 +127,10 @@
     },
     {
         "name": "asktoask",
+        "description": "A tag with a pregenerated response"
+    },
+    {
+        "name": "log",
         "description": "A tag with a pregenerated response"
     }
 ]

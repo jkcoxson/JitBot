@@ -18,5 +18,9 @@
     {
         "tag": "asktoask",
         "response": "https://dontasktoask.com"
+    },
+    {
+        "tag": "log",
+        "response": "https://discord.com/channels/949183273383395328/1041289432352956558/1041292421067194399"
     }
 ]
