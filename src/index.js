@@ -86,6 +86,24 @@ client.on('messageCreate', message => {
     if (Math.random() < 0.001) {
         message.channel.send('Have you tried running it over with your car?');
     }
+    if (Math.random() < 0.001) {
+        message.channel.send('https://tenor.com/view/stoobid-steven-he-dumb-you-so-stoobid-gif-21984392');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('https://tenor.com/view/laugh-laughing-drink-and-laugh-drinking-laugh-rajabets-gif-22201520');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('https://tenor.com/view/sigh-of-relief-omg-hard-case-oh-my-god-sarcastic-smile-gif-23094385');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('https://tenor.com/view/no-bugs-bunny-nope-gif-14359850');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('https://tenor.com/view/youre-welcome-gif-25058970');
+    }
+    if (Math.random() < 0.001) {
+        message.channel.send('https://tenor.com/view/worried-kermit-kermit-the-frog-muppets-stressed-gif-17987745');
+    }
 });
 
 client.on('interactionCreate', interaction => {
