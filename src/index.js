@@ -64,45 +64,27 @@ client.on('messageCreate', message => {
         message.channel.send('All rise for the Rust national anthem\nhttps://www.youtube.com/watch?v=LDU_Txk06tM');
     }
 
+    let randoms = [
+        'You are insecure',
+        'lol imagine',
+        'No, I don\'t think I will',
+        'https://tenor.com/view/yeet-lion-king-simba-rafiki-throw-gif-16194362',
+        'Excuse me, what?!',
+        'Ah heck no',
+        'Have you tried running it over with your car?',
+        'https://tenor.com/view/stoobid-steven-he-dumb-you-so-stoobid-gif-21984392',
+        'https://tenor.com/view/laugh-laughing-drink-and-laugh-drinking-laugh-rajabets-gif-22201520',
+        'https://tenor.com/view/sigh-of-relief-omg-hard-case-oh-my-god-sarcastic-smile-gif-23094385',
+        'https://tenor.com/view/no-bugs-bunny-nope-gif-14359850',
+        'https://tenor.com/view/youre-welcome-gif-25058970',
+        'https://tenor.com/view/worried-kermit-kermit-the-frog-muppets-stressed-gif-17987745'
+    ]
+
     // Randomly respond to messages
-    if (Math.random() < 0.003) {
-        message.channel.send('You are insecure');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('lol imagine');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('No, I don\'t think I will');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('https://tenor.com/view/yeet-lion-king-simba-rafiki-throw-gif-16194362');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('Excuse me, what?!');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('Ah heck no');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('Have you tried running it over with your car?');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('https://tenor.com/view/stoobid-steven-he-dumb-you-so-stoobid-gif-21984392');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('https://tenor.com/view/laugh-laughing-drink-and-laugh-drinking-laugh-rajabets-gif-22201520');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('https://tenor.com/view/sigh-of-relief-omg-hard-case-oh-my-god-sarcastic-smile-gif-23094385');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('https://tenor.com/view/no-bugs-bunny-nope-gif-14359850');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('https://tenor.com/view/youre-welcome-gif-25058970');
-    }
-    if (Math.random() < 0.001) {
-        message.channel.send('https://tenor.com/view/worried-kermit-kermit-the-frog-muppets-stressed-gif-17987745');
+    if (Math.random() < 0.005) {
+        // Choose a random response
+        let item = randoms[Math.floor(Math.random() * randoms.length)];
+        message.channel.send(item);
     }
 });
 
